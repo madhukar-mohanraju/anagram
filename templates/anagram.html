@@ -1,0 +1,16 @@
+<html>
+<body>
+
+<form method="POST">
+  <h4>Enter Anagram Input word:
+  <input type="text" name="userinput" size="8"></h4>
+  <input type="submit" value="Submit">
+</form>
+
+<p>NOTE: the maximum width of a text input field is 8 characters and use lowercase.</p>
+{% if anagram_out %}
+  <h4>Output: {{ anagram_out }}</h4>
+{% endif %}
+
+</body>
+</html>
