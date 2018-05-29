@@ -1,0 +1,46 @@
+- hosts: webservers
+  gather_facts: False
+  become: yes
+
+  tasks:
+    - name: Copy the deployment tar
+      copy:
+        src: "{{ workspace_dir }}/deployment.tar.gz"
+        dest: /var/www/flask/deployment.tar.gz
+
+    - name: Extract archive
+      unarchive:
+        src: /var/www/flask/deployment.tar.gz
+        dest: /var/www/flask/
+        owner: flask
+        group: flask
+        mode: 0755
+        remote_src: yes
+
+    - name: Deactivate the default apache2 site
+      file: 
+        path: /var/www/html/index.html
+        state: absent
+
+    - name: Copy flask config file to apache2 config
+      copy:
+        src: /var/www/flask/000-default.conf
+        dest: /etc/apache2/sites-available/000-default.conf
+        remote_src: yes
+        backup: yes
+        mode: 0644
+
+    - name: Restart apache2
+      service: 
+        name: apache2
+        state: restarted        
+
+    - name: Remove the config file
+      file: 
+        path: /var/www/flask/000-default.conf
+        state: absent
+
+    - name: Remove the tarfile
+      file: 
+        path: /var/www/flask/deployment.tar.gz
+        state: absent
