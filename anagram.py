@@ -26,7 +26,7 @@ def hello():
         if 'name' in request.args:
             return render_template('index.html', username=request.args['name'])
         else:
-            return 'Hello Sample Deployment test!!!'
+            return 'Hello Everyone!!!'
     
 @app.route('/anagram', methods = ['GET', 'POST'])
 def anagram():
