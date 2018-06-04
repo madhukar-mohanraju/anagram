@@ -27,9 +27,9 @@ def test_home_page(client):
     assert response.status_code == 200
     assert b'Hello Everyone!!!' in response.data
     
-#def test_invalid_page(client):
-#    response = client.get('/random')
-#    assert response.status_code == 404
+def test_invalid_page(client):
+    response = client.get('/random')
+    assert response.status_code == 404
 
 def home_page_with_user(client, name):
     return client.get('/?name='+name)
